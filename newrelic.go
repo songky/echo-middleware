@@ -23,7 +23,8 @@ func NewRelic(appName string, licenseKey string) echo.MiddlewareFunc {
 func NewRelicWithApplication(app nr.Application) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			txn := app.StartTransaction(c.Path(), c.Response().Writer, c.Request())
+			transactionName := fmt.Sprintf("%s %s", c.Path(), c.Request().Method)
+			txn := app.StartTransaction(transactionName, c.Response().Writer, c.Request())
 			defer txn.End()
 
 			c.Set("newrelic-txn", txn)
