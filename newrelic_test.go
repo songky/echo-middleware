@@ -42,3 +42,25 @@ func TestNewRelicWithApplication(t *testing.T) {
 
 	h(c)
 }
+
+func TestNewrelicWithHttpMethod(t *testing.T) {
+	e := echo.New()
+	req := httptest.NewRequest(echo.GET, "/test", nil)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+	c.SetPath("/test")
+
+	app := new(Application)
+
+	h := NewRelicWithApplication(app)(func(c echo.Context) error {
+		txn := c.Get(NEWRELIC_TXN).(*Transaction)
+
+		if txn.Name != "/test [GET]" {
+			t.Fatalf("Invalid transaction name: %s", txn.Name)
+		}
+
+		return fmt.Errorf("Something wrong")
+	})
+
+	h(c)
+}
