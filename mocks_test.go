@@ -11,11 +11,12 @@ type (
 
 	Transaction struct {
 		http.ResponseWriter
+		Name string
 	}
 )
 
 func (app *Application) StartTransaction(name string, w http.ResponseWriter, r *http.Request) nr.Transaction {
-	return new(Transaction)
+	return &Transaction{Name: name}
 }
 
 func (app *Application) RecordCustomEvent(eventType string, params map[string]interface{}) error {
@@ -26,6 +27,10 @@ func (app *Application) Shutdown(timeout time.Duration) {
 }
 
 func (app *Application) WaitForConnection(timeout time.Duration) error {
+	return nil
+}
+
+func (app *Application) RecordCustomMetric(name string, value float64) error {
 	return nil
 }
 
