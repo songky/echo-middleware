@@ -7,6 +7,7 @@ import (
 )
 
 const (
+	// NEWRELIC_TXN defines the context key used to save newrelic transaction
 	NEWRELIC_TXN = "newrelic-txn"
 )
 
