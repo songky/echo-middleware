@@ -6,6 +6,8 @@ import (
 	"io"
 )
 
+// LoggerWithOutput returns a Logger middleware with output.
+// See: `Logger()`.
 func LoggerWithOutput(w io.Writer) echo.MiddlewareFunc {
 	config := mw.DefaultLoggerConfig
 	config.Output = w

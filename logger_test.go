@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/labstack/echo"
+	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
@@ -11,18 +11,16 @@ import (
 
 func TestLogger(t *testing.T) {
 	e := echo.New()
-	req := httptest.NewRequest(echo.GET, "/something", nil)
+	req := httptest.NewRequest(echo.GET, "/some", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 	b := new(bytes.Buffer)
 
-	h := LoggerWithOutput(b)(func(c echo.Context) error {
-		return fmt.Errorf("Something wrong")
-	})
+	LoggerWithOutput(b)(func(c echo.Context) error {
+		return c.String(http.StatusOK, "test")
+	})(c)
 
-	h(c)
-
-	if !strings.Contains(b.String(), "500") {
+	if !strings.Contains(b.String(), "200") {
 		t.Errorf("Wrong error message: %s", b.String())
 	}
 }
