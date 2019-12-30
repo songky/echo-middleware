@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	nr "github.com/newrelic/go-agent"
 )
 

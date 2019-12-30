@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"bytes"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/http/httptest"
 	"strings"

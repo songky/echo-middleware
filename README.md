@@ -31,7 +31,7 @@ import (
     "bytes"
     "net/http"
 	mw "github.com/dafiti/echo-middleware"
-    "github.com/labstack/echo"
+    "github.com/labstack/echo/v4"
 )
 
 func main() {
